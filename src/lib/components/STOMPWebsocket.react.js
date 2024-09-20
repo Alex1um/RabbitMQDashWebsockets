@@ -42,7 +42,15 @@ export default class STOMPWebsocket extends Component {
         const {subscribe, unsubscribe, send} = this.props;
         console.log(subscribe, prevProps.subscribe, unsubscribe, prevProps.unsubscribe)
         // Send messages.
-        if (subscribe && subscribe !== prevProps.subscribe) {
+        if (unsubscribe && unsubscribe === prevProps.subscribe && subscribe !== prevProps.subscribe) {
+            this._subscribtion.unsubscribe();
+            this._subscribtion = this._client.subscribe(subscribe,
+                message => {
+                    this.props.setProps({message: message.body})
+                }
+            );
+            this.props.setProps({unsubscribe: null})
+        } else if (subscribe && subscribe !== prevProps.subscribe) {
             this._subscribtion = this._client.subscribe(subscribe,
                 message => {
                     this.props.setProps({message: message.body})
