@@ -16,6 +16,7 @@ export default class STOMPWebsocket extends Component {
         url = url? url : "ws://" + location.host + location.pathname + "ws";
         this._client = new Client({
             brokerURL: url,
+            logRawCommunication: false
         })
 
         this._client.activate();
@@ -23,7 +24,7 @@ export default class STOMPWebsocket extends Component {
             this._client.onConnect = () => {
                 this._subscribtion = this._client.subscribe(subscribe,
                     message => {
-                        this.props.setProps({message: message.body})
+                        this.props.setProps({message: JSON.parse(message.body)})
                     }
                 );
             }
@@ -46,21 +47,21 @@ export default class STOMPWebsocket extends Component {
             this._subscribtion.unsubscribe();
             this._subscribtion = this._client.subscribe(subscribe,
                 message => {
-                    this.props.setProps({message: message.body})
+                    this.props.setProps({message: JSON.parse(message.body)})
                 }
             );
             this.props.setProps({unsubscribe: null})
         } else if (subscribe && subscribe !== prevProps.subscribe) {
             this._subscribtion = this._client.subscribe(subscribe,
                 message => {
-                    this.props.setProps({message: message.body})
+                    this.props.setProps({message: JSON.parse(message.body)})
                 }
             );
         } else if (subscribe && unsubscribe && unsubscribe === subscribe) {
             this._subscribtion.unsubscribe();
             this.props.setProps({subscribe: null, unsubscribe: null})
         } else if (send && send !== prevProps.send) {
-            this._client.publish({destination: send.destination, body: send.body});
+            this._client.publish({destination: send.destination, body: JSON.stringify(send.body)});
         }
     }
 
@@ -91,7 +92,7 @@ STOMPWebsocket.propTypes = {
     /**
      * The message from subscription.
      */
-    message: PropTypes.string,
+    message: PropTypes.object,
 
     /**
      * The message to send

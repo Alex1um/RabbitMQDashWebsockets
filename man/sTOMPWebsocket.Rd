@@ -17,7 +17,7 @@ unsubscribe=NULL, url=NULL)
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
 
-\item{message}{Character. The message from subscription.}
+\item{message}{Named list. The message from subscription.}
 
 \item{send}{Named list. The message to send}
 

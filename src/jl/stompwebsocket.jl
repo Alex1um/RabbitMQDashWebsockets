@@ -13,7 +13,7 @@ It renders an input with the property `value`
 which is editable by the user.
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
-- `message` (String; optional): The message from subscription.
+- `message` (Dict; optional): The message from subscription.
 - `send` (Dict; optional): The message to send
 - `subscribe` (String; optional): The topic to subscribe to.
 - `unsubscribe` (String; optional): The topic to unsubscribe from.

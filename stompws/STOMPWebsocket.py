@@ -16,7 +16,7 @@ Keyword arguments:
 - id (string; optional):
     The ID used to identify this component in Dash callbacks.
 
-- message (string; optional):
+- message (dict; optional):
     The message from subscription.
 
 - send (dict; optional):
